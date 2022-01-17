@@ -77,18 +77,18 @@ def telega_bot (token):
     
     @bot.message_handler(content_types=["text"])    
     def send_message(message):
-        if message.text.lower()=="price":
+        if message.text.lower()=="/price":
             bot.send_message(message.chat.id,f"{get_ETH_price()}")
         
-        elif str(message.text.lower()).startswith("ping"):
+        elif str(message.text.lower()).startswith("/ping"):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
             if len(get_msg)==1:
-                bot.send_message(message.chat.id,f"Так а куда трассировка то?")
+                bot.send_message(message.chat.id,f"Так а что пингуем то?")
             else:
                 bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
                 bot.send_message(message.chat.id,f"{pinger(get_msg[1])}")
-        elif str(message.text.lower()).startswith("tracert") or str(message.text.lower()).startswith("traceroute"):
+        elif str(message.text.lower()).startswith("/tracert") or str(message.text.lower()).startswith("/traceroute"):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
             if len(get_msg)==1:
@@ -97,7 +97,7 @@ def telega_bot (token):
                 bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
                 bot.send_message(message.chat.id,f"{tracert(get_msg[1])}")
 
-        elif str(message.text.lower()).startswith("nslookup") :
+        elif str(message.text.lower()).startswith("/nslookup") :
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
             bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
@@ -110,7 +110,7 @@ def telega_bot (token):
                 bot.send_message(message.chat.id,f"{nslookup(get_msg[1])}")
         else:
             bot.send_message(message.chat.id,f"Чё надо, хозяин?")
-            bot.send_message(message.chat.id,f"Я умею делать трассировку:\ntracert 8.8.8.8\nПинг:\nping 8.8.8.8\nNsLookUp:\nnslookup host [ipdns,дэфолдно 8.8.8.8]")
+            bot.send_message(message.chat.id,f"Я умею делать трассировку:\n/tracert 8.8.8.8\nПинг:\n/ping 8.8.8.8\nNsLookUp:\n/nslookup host [ipdns,дэфолдно 8.8.8.8]")
         
         
     bot.polling()
