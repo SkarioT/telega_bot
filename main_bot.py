@@ -48,7 +48,7 @@ def tracert(host='8.8.8.8'):
     print(response.decode('Windows-1251'))
     return response.decode('Windows-1251')
 
-def nslookup(host='8.8.8.8',server=' '):
+def nslookup(host='8.8.8.8',server='8.8.8.8'):
     
     p_sys = platform.system()
     if p_sys == "Windows":
@@ -84,7 +84,7 @@ def telega_bot (token):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
             if len(get_msg)==1:
-                bot.send_message(message.chat.id,f"Так а что пингуем то?")
+                bot.send_message(message.chat.id,f"Так а что то?")
             else:
                 bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
                 bot.send_message(message.chat.id,f"{pinger(get_msg[1])}")
@@ -110,7 +110,7 @@ def telega_bot (token):
                 bot.send_message(message.chat.id,f"{nslookup(get_msg[1])}")
         else:
             bot.send_message(message.chat.id,f"Чё надо, хозяин?")
-            bot.send_message(message.chat.id,f"Я умею делать трассировку:\n/tracert 8.8.8.8\nПинг:\n/ping 8.8.8.8\nNsLookUp:\n/nslookup host [ipdns,дэфолдно 8.8.8.8]")
+            bot.send_message(message.chat.id,f"Я умею делать трассировку:\n/tracert 8.8.8.8\nПинг:\n/ping 8.8.8.8\nNsLookUp:\n/nslookup host [ipdns,default 8.8.8.8]")
         
         
     bot.polling()
