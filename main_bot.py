@@ -18,11 +18,16 @@ def get_ETH_price ():
     return f"Курс ETH {USD_price} на {cdt}"
 
 def pinger(host='8.8.8.8'):
+
     parameter = '-n' if platform.system().lower()=='windows' else '-c'
 
     command = ['ping', parameter, '3', host]
-    response = subprocess.check_output(command)
-
+    try:
+        response = subprocess.check_output(command)
+    #добавить проверку статус кода \\ returned non-zero exit status 1
+    except subprocess.CalledProcessError as e:
+        response = e.output
+        # return response
     print(response.decode('Windows-1251'))
     return response.decode('Windows-1251')
 
@@ -33,8 +38,13 @@ def tracert(host='8.8.8.8'):
         command = ['tracert', host]
     else:
         command = ['traceroute', host]
-    response = subprocess.check_output(command)
-
+        
+    try:
+        response = subprocess.check_output(command)
+    #добавить проверку статус кода \\ returned non-zero exit status 1
+    except subprocess.CalledProcessError as e:
+        response = e.output
+        # return response
     print(response.decode('Windows-1251'))
     return response.decode('Windows-1251')
 
