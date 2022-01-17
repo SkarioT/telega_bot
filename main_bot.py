@@ -4,6 +4,7 @@ from datetime import datetime
 import telebot
 import platform
 import subprocess
+import platform
 
 # from requests.exceptions import SSLError
 
@@ -27,8 +28,11 @@ def pinger(host='8.8.8.8'):
 
 def tracert(host='8.8.8.8'):
 
-
-    command = ['tracert', host]
+    p_sys = platform.system()
+    if p_sys == "Windows":
+        command = ['tracert', host]
+    else:
+        command = ['traceroute', host]
     response = subprocess.check_output(command)
 
     print(response.decode('Windows-1251'))
@@ -54,7 +58,7 @@ def telega_bot (token):
             bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
 
             bot.send_message(message.chat.id,f"{pinger(get_msg[1])}")
-        elif str(message.text.lower()).startswith("tracert"):
+        elif str(message.text.lower()).startswith("tracert") or str(message.text.lower()).startswith("traceroute"):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
             bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
