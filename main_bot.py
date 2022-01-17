@@ -38,7 +38,7 @@ def tracert(host='8.8.8.8'):
         command = ['tracert', host]
     else:
         command = ['traceroute', host]
-        
+
     try:
         response = subprocess.check_output(command)
     #добавить проверку статус кода \\ returned non-zero exit status 1
@@ -47,6 +47,24 @@ def tracert(host='8.8.8.8'):
         # return response
     print(response.decode('Windows-1251'))
     return response.decode('Windows-1251')
+
+def nslookup(host='8.8.8.8',server=' '):
+    
+    p_sys = platform.system()
+    if p_sys == "Windows":
+        command = ['nslookup', host,server]
+    else:
+        command = ['nslookup', host,server]
+
+    try:
+        response = subprocess.check_output(command)
+    #добавить проверку статус кода \\ returned non-zero exit status 1
+    except subprocess.CalledProcessError as e:
+        response = e.output
+        # return response
+    print(response.decode('Windows-1251'))
+    return response.decode('Windows-1251')
+
 
 
 def telega_bot (token):
@@ -65,17 +83,34 @@ def telega_bot (token):
         elif str(message.text.lower()).startswith("ping"):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
-            bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
-
-            bot.send_message(message.chat.id,f"{pinger(get_msg[1])}")
+            if len(get_msg)==1:
+                bot.send_message(message.chat.id,f"Так а куда трассировка то?")
+            else:
+                bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
+                bot.send_message(message.chat.id,f"{pinger(get_msg[1])}")
         elif str(message.text.lower()).startswith("tracert") or str(message.text.lower()).startswith("traceroute"):
             get_msg = str(message.text.lower()).split(" ")
             print(get_msg)
-            bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
+            if len(get_msg)==1:
+                bot.send_message(message.chat.id,f"Так а куда трассировка то?")
+            else:
+                bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
+                bot.send_message(message.chat.id,f"{tracert(get_msg[1])}")
 
-            bot.send_message(message.chat.id,f"{tracert(get_msg[1])}")
+        elif str(message.text.lower()).startswith("nslookup") :
+            get_msg = str(message.text.lower()).split(" ")
+            print(get_msg)
+            bot.send_message(message.chat.id,f"Выполняю команду {message.text.lower()}")
+            print(len(get_msg))
+            if len(get_msg)==1:
+                bot.send_message(message.chat.id,f"Так а что резолвим то?")
+            elif len(get_msg)==3:
+                bot.send_message(message.chat.id,f"{nslookup(get_msg[1],get_msg[2])}")
+            else:
+                bot.send_message(message.chat.id,f"{nslookup(get_msg[1])}")
         else:
             bot.send_message(message.chat.id,f"Чё надо, хозяин?")
+            bot.send_message(message.chat.id,f"Я умею делать трассировку:\ntracert 8.8.8.8\nПинг:\nping 8.8.8.8\nNsLookUp:\nnslookup host [ipdns,дэфолдно 8.8.8.8]")
         
         
     bot.polling()
