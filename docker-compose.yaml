@@ -1,0 +1,9 @@
+version: "3.9"
+
+
+services: 
+  telega_bot:
+      container_name: telega_skariot_net-tools_bot_container
+      image: telega_skariot_net-tools_bot
+      restart: always
+
