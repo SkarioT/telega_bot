@@ -10,10 +10,10 @@ If error:
 AttributeError: 'TeleBot' object has no attribute 'message_handler'
 
 Commad for fix:
-pip3 uninstall telebot
-pip3 uninstall PyTelegramBotAPI
-pip3 install pyTelegramBotAPI
-pip3 install --upgrade pyTelegramBotAPI
+      pip3 uninstall telebot
+      pip3 uninstall PyTelegramBotAPI
+      pip3 install pyTelegramBotAPI
+      pip3 install --upgrade pyTelegramBotAPI
 
 
 # ________________________________
